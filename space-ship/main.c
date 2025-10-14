@@ -15,7 +15,6 @@ void init() {
   noecho();
   curs_set(0);
   timeout(0); 
-  nodelay(stdscr, TRUE);
 
   border(0, 0, 0, 0, 0, 0, 0, 0);
 }
@@ -66,6 +65,18 @@ void bg_stars(WINDOW* win, int key) {
   wrefresh(win);
 }
 
+typedef struct {
+  unsigned int y;
+  unsigned int x;
+} ship_position;
+
+void ship(WINDOW* win, ship_position* point) {
+  werase(win);
+//  mvwaddch(win, point->y, point->x, '@');
+  mvwaddstr(win, point->y, point->x, "<-@->");
+  wrefresh(win);
+}
+
 int main(int argc, char* argv[]) {
 
   int x, y, key=1;
@@ -79,14 +90,40 @@ int main(int argc, char* argv[]) {
   WINDOW *bg = newwin(y - 2, x - 2, 1, 1);
   WINDOW *fg = newwin(y - 2, x -2, 1, 1);
 
+  nodelay(stdscr, TRUE);
+  keypad(stdscr, TRUE);
+
   const int fps = 30;           // target FPS
-  const int frame_delay = 10000 / fps; // milliseconds per frame
-  
+  const int frame_delay = 6000 / fps; // milliseconds per frame
+
+  ship_position point = { .y = y / 2, x = 1 };
+
+  int ch;
   do {
-    key = rand() % 5 + 1;
-    bg_stars(bg, key);
-    napms(frame_delay);       // maintain ~30 FPS
-  } while(getch() != 113);
+    bg_stars(bg, 1);
+    ship(fg, &point);
+    overlay(fg, bg);
+    wrefresh(bg);
+
+    ch = getch();
+
+    switch (ch) {
+      case KEY_UP:    point.y--; break;
+      case KEY_DOWN:  point.y++; break;
+      case KEY_LEFT:  point.x--; break;
+      case KEY_RIGHT: point.x++; break;
+      default: break;
+    }
+
+    // boundaries
+    if (point.y < 1) point.y = 1;
+    if (point.y > y - 4) point.y = y - 4;
+    if (point.x < 1) point.x = 1;
+    if (point.x > x - 4) point.x = x - 4;
+
+    napms(frame_delay);
+
+  } while(ch != 113);
   end(0, "main", "closing the game..");
 
   return EXIT_SUCCESS;
