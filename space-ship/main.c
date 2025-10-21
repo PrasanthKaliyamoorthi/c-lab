@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
+//#include <pthread.h>
 
 
 void init();
 void opening();
 void bg_stars(WINDOW* win, int key);
 void end(int code, char* location, char* msg);
-
 
 void init() {
   initscr();
@@ -77,6 +77,18 @@ void ship(WINDOW* win, ship_position* point) {
   wrefresh(win);
 }
 
+void shoot(WINDOW* win, int y, int x, int end, WINDOW* bg) {
+    for (int i = x + 3; i < end - 3; i++) {
+        mvwaddch(win, y, i, '-');
+        wrefresh(win);   // refresh THIS window, not stdscr
+        napms(30);
+        mvwaddch(win, y, i, ' ');
+  }
+  wrefresh(win);
+
+}
+
+
 int main(int argc, char* argv[]) {
 
   int x, y, key=1;
@@ -90,7 +102,7 @@ int main(int argc, char* argv[]) {
   WINDOW *bg = newwin(y - 2, x - 2, 1, 1);
   WINDOW *fg = newwin(y - 2, x -2, 1, 1);
 
-  nodelay(stdscr, TRUE);
+  //nodelay(stdscr, TRUE);
   keypad(stdscr, TRUE);
 
   const int fps = 30;           // target FPS
@@ -112,6 +124,7 @@ int main(int argc, char* argv[]) {
       case KEY_DOWN:  point.y++; break;
       case KEY_LEFT:  point.x--; break;
       case KEY_RIGHT: point.x++; break;
+      case 120: shoot(fg, point.y, point.x, x, bg); break;
       default: break;
     }
 
