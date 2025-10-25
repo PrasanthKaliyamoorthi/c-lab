@@ -4,13 +4,11 @@
 #include <pthread.h>
 #include <time.h>
 #include <unistd.h>
+#include "space.h"
+
 
 pthread_t pt_bg;
-
-void init();
-void opening();
-void* background_animation(void*);
-void end(int, char*, char*);
+pthread_t pt_movement;
 
 void init() {
     initscr();
@@ -42,8 +40,11 @@ void opening() {
 
 void end(int exit_code, char* exit_caller, char* exit_msg) {
     endwin();
+    pthread_cancel(pt_movement);
+    pthread_cancel(pt_bg);
+
     if (exit_code != 0) {
-        fprintf(stderr, "Something happend at %s!\n", exit_caller);
+        fprintf(stderr, "Something happened at %s!\n", exit_caller);
     }
     if (exit_msg != NULL) {
         fprintf(stdout, "%s\n", exit_msg);
@@ -73,10 +74,24 @@ void* background_animation(void* arg) {
         }
 
         wrefresh(bg);
-        usleep(300000); //30 fps or 300ms
+        usleep(fps); //30 fps or 300MS
     }
 }
 
+void* pilot_ship(void* arg) {
+    WINDOW* movement = (WINDOW*) arg;
+    srand(time(NULL));
+
+    while (TRUE) {
+        werase(movement);
+        mvwaddch(movement, ship.y, ship.x, '@');
+        wrefresh(movement);
+        usleep(fps);
+    }
+}
+
+
+/////////////////////main///////////////////////
 
 int main(int argc, char* argv[]) {
     int y, x, ch;
@@ -86,8 +101,14 @@ int main(int argc, char* argv[]) {
 
     getmaxyx(stdscr, y, x);
 
-    WINDOW *bg = newwin(y - 2, x -2, 1, 1);
+    WINDOW *bg = newwin(y - 2, x - 2, 1, 1);
     pthread_create(&pt_bg, NULL, background_animation, bg);
+
+    ship.y = y / 2;
+    ship.x = 2;
+
+    WINDOW *movement = newwin(y - 2, x - 2, 1, 1);
+    pthread_create(&pt_movement, NULL, pilot_ship, movement);
 
     do {
         ch = getch();
