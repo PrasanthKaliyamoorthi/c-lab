@@ -1,5 +1,9 @@
 #include "./include/parse.h"
 
+
+bool is_test_run = false;
+
+
 int main(int argc, char* argv[]) {
   FILE* fd = fopen("./config.ini", "r");
 

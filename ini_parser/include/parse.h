@@ -8,7 +8,8 @@
 #include <stdbool.h>
 #include <errno.h>
 
-
+extern bool is_test_run;
+#define M_EXIT(s) if (is_test_run){}else exit(s);
 
 void rtrim(char *s);
 bool validate_conf(FILE* conf);

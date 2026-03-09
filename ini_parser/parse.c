@@ -1,5 +1,6 @@
 #include "./include/parse.h"
 
+
 typedef struct {
   int num;
   char* alp;
@@ -20,7 +21,7 @@ void generate_conf(char* filename) {
     puts("Old `config.ini.sample` file will be overwritten. Y/n");
     char choice = getchar();
     if ((char) tolower(choice) == 'n') {
-      exit(0);
+      M_EXIT(1);
     };
   };
 
@@ -32,7 +33,7 @@ void generate_conf(char* filename) {
   fprintf(fd, "name = \"user\"\n");
   fprintf(fd, "age = 77\n");
   fprintf(fd, "alive = true\n");
-  exit(0);
+  M_EXIT(0);
 }
 
 bool validate_conf(FILE* conf) {
