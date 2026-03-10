@@ -1,4 +1,5 @@
 #--- this is a sample config file after done editing remove this comment ---
+[basic]
 name = "user"
 age = 77
 alive = true

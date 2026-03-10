@@ -12,6 +12,13 @@ void rtrim(char *s) {
     while (i >= 0 && isspace((unsigned char)s[i]))
         s[i--] = '\0';
 }
+void ltrim(char *s) {
+    int i = 0;
+    while (isspace((unsigned char)s[i]))
+        i++;
+    
+    memmove(s, s+i, strlen(s+i)+1);
+}
 
 void generate_conf(char* filename) {
   puts("Generating example config file. `config.ini.sample`.");
@@ -30,6 +37,7 @@ void generate_conf(char* filename) {
   puts("After configuring the sample file rename it to `config.ini`.");
 
   fprintf(fd, "#--- this is a sample config file after done editing remove this comment ---\n");
+  fprintf(fd, "[basic]\n");
   fprintf(fd, "name = \"user\"\n");
   fprintf(fd, "age = 77\n");
   fprintf(fd, "alive = true\n");
@@ -43,6 +51,9 @@ bool validate_conf(FILE* conf) {
 
   while ((read_len = getline(&line, &len, conf)) != -1) {
     rtrim(line);
+    ltrim(line);
+    if (strcmp("#", &line[0])) {
+    }
     printf("%s\n", line);
     printf("read length : %ld\n", read_len);
     puts("");

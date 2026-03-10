@@ -12,6 +12,7 @@ extern bool is_test_run;
 #define M_EXIT(s) if (is_test_run){}else exit(s);
 
 void rtrim(char *s);
+void ltrim(char *s);
 bool validate_conf(FILE* conf);
 void generate_conf(char* filename);
 #endif
