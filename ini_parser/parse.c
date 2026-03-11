@@ -44,6 +44,44 @@ void generate_conf(char* filename) {
   M_EXIT(0);
 }
 
+void parse_section(FILE* conf, char** list) {
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read_len;
+    int i = 0;
+
+    while (1) {
+        long pos = ftell(conf);
+
+        read_len = getline(&line, &len, conf);
+        if (read_len == -1)
+            break;
+
+        rtrim(line);
+        ltrim(line);
+
+        if (line[0] == '[') {
+            fseek(conf, pos, SEEK_SET);
+            break;
+        }
+
+        if (line[0] == '#' || line[0] == '\0')
+            continue;
+
+        list[i] = strdup(line);
+        i++;
+    }
+    list[i] = NULL;
+
+    free(line);
+
+}
+
+bool validate_basic(FILE* conf) {
+    char* section[100];
+    parse_section(conf, section);
+    return true;
+};
 bool validate_conf(FILE* conf) {
   char* line = NULL;
   size_t len = 0;
@@ -52,11 +90,17 @@ bool validate_conf(FILE* conf) {
   while ((read_len = getline(&line, &len, conf)) != -1) {
     rtrim(line);
     ltrim(line);
-    if (strcmp("#", &line[0])) {
+    if (line[0] == '#' || line[0] == '\0')
+      continue;
+    if (line[0] == '[') {
+        char option[30];
+      if (sscanf(line, "[%29[^]]", option) == 1) {
+        
+        if (strcmp("basic", option) == 0) {
+          if (validate_basic(conf)) { puts("pass"); };
+        }
+      }
     }
-    printf("%s\n", line);
-    printf("read length : %ld\n", read_len);
-    puts("");
   }
   
   return true;
