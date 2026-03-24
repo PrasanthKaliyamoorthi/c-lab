@@ -1,10 +1,6 @@
 #ifndef DICT_H
 #define DICT_H
 
-#include <stddef.h>
-#include <stdint.h>
-#include <stdbool.h>
-
 typedef struct Item {
   void* key;
   void* value;
@@ -12,9 +8,9 @@ typedef struct Item {
 
 typedef struct Dict {
   Item bucket[1000];
-  int used;
-  struct Dict* next;
+  int filled;
   int key_max;
+  struct Dict* next;
 } Dict;
 
 Dict dict(int max);
@@ -22,10 +18,10 @@ void put_dict(Dict* dict, void* key, void* value);
 Item get_dict(Dict* dict, void* key);
 void* get_value(Dict* dict, void* key);
 void del_dict(Dict* dict, void* key);
-void len_dict(Dict* dict);
+int len_dict(Dict* dict);
 void free_dict(Dict* dict);
 
-int hash(void* key);
-bool probe(Dict* dict, int index, char* key);
+int key_hash(void* key);
+bool key_probe(Dict* dict, int index, char* key);
 
 #endif

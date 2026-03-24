@@ -3,17 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-struct Item {
-  void* key;
-  void* value;
-};
 
-struct Dict {
-  Item bucket[1000];
-  int used;
-  struct Dict* next;
-  int key_max;
-};
 
 int hash(void* key) {
   char *str = (char*)key;
@@ -61,7 +51,6 @@ Item get_dict(Dict* dict, void *key) {
     }
     index = (index + 1) % 1000;
   }
-  index--;
   return (*dict).bucket[index];
 }
 
@@ -70,6 +59,7 @@ void* get_value(Dict* dict, void* key) {
 }
 
 
+#ifndef TESTING
 int main(int argc, char* argv[]) {
   Dict mydict = dict(30);
   put_dict(&mydict, "color", "blue");
@@ -77,3 +67,4 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
+#endif

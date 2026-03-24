@@ -1,4 +1,4 @@
-#include "./include/parse.h"
+#include "../include/parse.h"
 
 
 typedef struct {
