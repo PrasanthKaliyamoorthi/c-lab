@@ -1,0 +1,10 @@
+INFO User login
+ERROR Database connection failed
+INFO File uploaded
+WARNING Disk usage high
+ERROR Database connection failed
+INFO User logout
+WARNING Disk usage high
+ERROR Authentication failed
+2026-06-08 10:00:01 INFO User login
+2026-06-08 10:05:21 ERROR Database connection failed

@@ -1,0 +1,6 @@
+INFO UserLogin
+ERROR DatabaseConnection
+INFO FileUpload
+WARNING DiskUsage
+ERROR DatabaseConnection
+INFO UserLogout
