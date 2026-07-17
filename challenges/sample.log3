@@ -1,0 +1,61 @@
+2026-06-01T10:00:00Z QUEUE id=Q100 span=S1 from=user1@test.com
+2026-06-01T10:00:01Z SMTP id=Q100 rcpt=a@test.com
+2026-06-01T10:00:02Z SMTP id=Q100 rcpt=b@test.com
+2026-06-01T10:00:03Z DELIVERY span=S1 status=success
+
+2026-06-01T10:01:00Z QUEUE id=Q101 span=S2 from=user2@test.com
+2026-06-01T10:01:01Z SMTP id=Q101 rcpt=c@test.com
+2026-06-01T10:01:02Z DELIVERY span=S2 status=failed
+
+2026-06-01T10:02:00Z QUEUE id=Q102 span=S3 from=admin@test.com
+2026-06-01T10:02:01Z SMTP id=Q102 rcpt=d@test.com
+2026-06-01T10:02:02Z SMTP id=Q102 rcpt=e@test.com
+2026-06-01T10:02:03Z SMTP id=Q102 rcpt=f@test.com
+2026-06-01T10:02:04Z DELIVERY span=S3 status=success
+
+2026-06-01T10:03:00Z SMTP id=Q999 rcpt=ghost@test.com
+
+2026-06-01T10:03:10Z DELIVERY span=S999 status=success
+
+2026-06-01T10:04:00Z QUEUE id=Q103 span=S4 from=alerts@test.com
+2026-06-01T10:04:01Z SMTP id=Q103 rcpt=ops1@test.com
+2026-06-01T10:04:02Z SMTP id=Q103 rcpt=ops2@test.com
+2026-06-01T10:04:03Z SMTP id=Q103 rcpt=ops3@test.com
+2026-06-01T10:04:04Z SMTP id=Q103 rcpt=ops4@test.com
+2026-06-01T10:04:05Z SMTP id=Q103 rcpt=ops5@test.com
+2026-06-01T10:04:06Z DELIVERY span=S4 status=success
+
+2026-06-01T10:05:00Z QUEUE id=Q104 span=S5 from=service@test.com
+2026-06-01T10:05:01Z SMTP id=Q104 rcpt=x@test.com
+2026-06-01T10:05:02Z SMTP id=Q104 rcpt=y@test.com
+2026-06-01T10:05:03Z SMTP id=Q104 rcpt=z@test.com
+2026-06-01T10:05:04Z DELIVERY span=S5 status=failed
+
+2026-06-01T10:06:00Z QUEUE id=Q105 span=S6 from=noreply@test.com
+2026-06-01T10:06:01Z SMTP id=Q105 rcpt=user01@test.com
+2026-06-01T10:06:02Z SMTP id=Q105 rcpt=user02@test.com
+2026-06-01T10:06:03Z SMTP id=Q105 rcpt=user03@test.com
+2026-06-01T10:06:04Z SMTP id=Q105 rcpt=user04@test.com
+2026-06-01T10:06:05Z SMTP id=Q105 rcpt=user05@test.com
+2026-06-01T10:06:06Z SMTP id=Q105 rcpt=user06@test.com
+2026-06-01T10:06:07Z SMTP id=Q105 rcpt=user07@test.com
+2026-06-01T10:06:08Z SMTP id=Q105 rcpt=user08@test.com
+2026-06-01T10:06:09Z SMTP id=Q105 rcpt=user09@test.com
+2026-06-01T10:06:10Z SMTP id=Q105 rcpt=user10@test.com
+2026-06-01T10:06:11Z DELIVERY span=S6 status=success
+
+2026-06-01T10:07:00Z QUEUE id=Q106 span=S7 from=reports@test.com
+2026-06-01T10:07:01Z SMTP id=Q106 rcpt=finance@test.com
+2026-06-01T10:07:02Z SMTP id=Q106 rcpt=ceo@test.com
+2026-06-01T10:07:03Z DELIVERY span=S7 status=success
+
+2026-06-01T10:08:00Z QUEUE id=Q107 span=S8 from=security@test.com
+2026-06-01T10:08:01Z SMTP id=Q107 rcpt=soc@test.com
+2026-06-01T10:08:02Z SMTP id=Q107 rcpt=siem@test.com
+2026-06-01T10:08:03Z SMTP id=Q107 rcpt=oncall@test.com
+2026-06-01T10:08:04Z DELIVERY span=S8 status=failed
+
+
+2026-06-01T11:00:00Z DELIVERY span=S500 status=success
+2026-06-01T11:00:01Z SMTP id=Q500 rcpt=test@test.com
+2026-06-01T11:00:02Z QUEUE id=Q500 span=S500 from=late@test.com
