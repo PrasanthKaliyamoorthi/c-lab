@@ -1,0 +1,7 @@
+"product_id","title","description","price","tags"
+1,"Standard Widget","Basic utility widget",19.99,"gadgets,tools"
+2,"Deluxe ""Pro"" Model","Includes ""lifetime"" warranty & extra parts",49.99,"premium,gadgets"
+3,"Multi-line Item","Line 1 of description
+Line 2 of description",29.50,"featured"
+4,"Address Item","123 Main St, Suite 400
+New York, NY 10001",15.00,"shipping"
