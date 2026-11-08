@@ -1,0 +1,5 @@
+- delimiter: \n or \r
+- separator: ,
+- header: asume the first row as header
+- quated values: , \n \r are do not have any special meaning inside double quats.
+- escape qoutes: use a double qoate to escape like the following value. `"hello ""world"""`
