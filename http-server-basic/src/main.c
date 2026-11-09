@@ -4,7 +4,7 @@
 
 int main(void) {
 
-  serve();
+  serve(NULL);
 
   return 0;
 }

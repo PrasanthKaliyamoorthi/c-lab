@@ -1,11 +1,12 @@
 #include <arpa/inet.h>
+#include <netdb.h>
 #include <netinet/in.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
-#include <netdb.h>
 
 #define PAGE_SIZE 4096
 
@@ -28,5 +29,5 @@ typedef struct {
 } payload;
 
 
-int talk_to_client(int connect_d) ;
-void * serve() ;
+void * handle_request(void * arg) ;
+void * serve(void * ) ;

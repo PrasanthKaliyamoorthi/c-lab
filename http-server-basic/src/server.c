@@ -1,6 +1,9 @@
 #include "../include/server.h"
+#include "../include/debug.h"
 
-int talk_to_client(int connect_d) {
+void * handle_request(void * arg) {
+
+  int connect_d = (int)(intptr_t)arg;
 
   char * msg = "Hello from Server!\r\n";
 
@@ -9,14 +12,17 @@ int talk_to_client(int connect_d) {
   }
 
   char chunk[PAGE_SIZE];
-  if(read(connect_d, chunk, 4096) <= 0) {
+  ssize_t bytes = read(connect_d, chunk, sizeof(chunk) - 1);
+  if(bytes <= 0) {
     perror("can't read message!");
   }
+  chunk[bytes] = '\0';
 
   printf("%s\n", chunk);
 
   if (send(connect_d, msg, strlen(msg), 0) == -1) {
     perror("can't send message!");
+    return NULL;
   }
 
   close(connect_d);
@@ -24,7 +30,9 @@ int talk_to_client(int connect_d) {
   return 0;
 }
 
-void *serve() {
+void *serve(void * arg) {
+  pthread_t thread;
+
   int listener_d = socket(PF_INET, SOCK_STREAM, 0);
 
   if ( listener_d == -1) {
@@ -62,7 +70,19 @@ void *serve() {
 
   while (1) {
     int connect_d = accept(listener_d, (struct sockaddr *) &client_addr, &address_size);
-    talk_to_client(connect_d);
+    if (connect_d == -1) {
+      perror("accept");
+      continue;
+    }
+
+    int thread_res = pthread_create(&thread, NULL, handle_request, (void *)(intptr_t)connect_d);
+    if (thread_res != 0) {
+        errno = thread_res;
+        perror("pthread_create");
+        close(connect_d);
+        continue;
+    }
+    pthread_detach(thread);
   }
 
   return 0;

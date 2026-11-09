@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <errno.h>
 
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
@@ -30,3 +31,5 @@ static const char *colors[COLOR_COUNT] = {
 };
 
 int d_print(char * str, debug_colors color);
+int print_green(char * str);
+int print_red(char * str);
